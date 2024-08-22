@@ -2,12 +2,12 @@
 
   <div class="home">
     <div class="products">
-      <div class="product" v-for="(product, index) in this.products" :key="index" :class="{ inBag: isInBag(product) }">
+      <div class="product" v-for="(product, index) in this.products" :key="index" :class="{ inBag: this.isInBag(product) }">
         <div class="product-image" :style="{ backgroundImage: 'url(' + product.image + ')' }"></div>
         <h4>{{ product.title }}</h4>
-        <p class="price">US$ {{ product.price.toFixed(2) }}</p>
-        <button v-if="!isInBag(product)" @click="addToBag(product);">Adicioanr ao carrinho</button>
-        <button v-else class="remove" @click="removeFromBag(product.id);">Remover do carrinho</button>
+        <p class="price">${{ product.price.toFixed(2) }}</p>
+        <button v-if="!this.isInBag(product)" @click="this.addToBag(product);">Adicioanr ao carrinho</button>
+        <button v-else class="remove" @click="this.removeFromBag(product.id);">Remover do carrinho</button>
       </div>
     </div>
   </div>
@@ -31,18 +31,22 @@ export default {
   ]),
 
   methods: {
+
     addToBag(product) {
       product.quantity = 1; // adiciona um novo atributo/coluna ao objeto chamado quantidade de valor um
       this.$store.dispatch('addToBag', product); // chama o metodo loadProducts, pelo dispacho, em açao no store do vuex
     },
+
     isInBag(product) {
       return this.productsInBag.find(item => item.id === product.id); // verifica se o produto já existe no array storage state
     },
+
     removeFromBag(productId) {
       if (confirm('Deseja realmente remover o produto?')) {
         this.$store.dispatch('removeFromBag', productId); // chama o metodo removeFromBag do action do store pelo dispacho para remover o produto pelo id
       }
     },
+
   },
 }
 </script>
