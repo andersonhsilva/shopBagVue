@@ -2,7 +2,7 @@
   <div class="basket">
     <div class="items">
 
-      <template v-if="this.productsInBag.lenght">
+      <template v-if="this.productsInBag.length">
         <div class="item" v-for="(product, index) in this.productsInBag" :key="index">
           <div class="remove" @click="this.removeFromBag(product.id);">Remover do carrinho</div>
           <div class="photo">
